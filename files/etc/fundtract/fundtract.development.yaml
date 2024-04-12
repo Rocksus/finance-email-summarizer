@@ -1,0 +1,14 @@
+app:
+  port: 8000
+
+log:
+  log_level: DEBUG
+  log_format: LOGFMT
+
+database:
+  fundtract:
+    name: "fundtract_db"
+    driver: "postgres"
+    max_open_conn: 20
+    conn_max_idle_time_secs: 1800
+    conn_max_lifetime_secs: 10
