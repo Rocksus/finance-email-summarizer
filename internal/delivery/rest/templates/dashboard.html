@@ -1,0 +1,80 @@
+{{ define "content" }}
+<div class="min-h-screen bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <h1 class="text-2xl font-bold text-indigo-600">Fundtract</h1>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button hx-post="/api/auth/logout" 
+                        class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                        Sign out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Account Summary -->
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+            <h2 class="text-lg font-medium text-gray-900 mb-4">Account Summary</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {{ range .Accounts }}
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-medium text-gray-900">{{ .AccountName }}</h3>
+                    <p class="text-2xl font-bold text-indigo-600">{{ .Currency }} {{ .Balance }}</p>
+                </div>
+                {{ end }}
+                <div hx-get="/api/accounts" hx-trigger="load" hx-target="this">
+                    <div class="animate-pulse bg-gray-200 h-24 rounded-lg"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="bg-white shadow rounded-lg p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-medium text-gray-900">Recent Transactions</h2>
+                <button hx-get="/transactions/new" hx-target="#modal" 
+                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                    Add Transaction
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200" hx-get="/api/transactions" hx-trigger="load">
+                        <tr>
+                            <td colspan="4" class="px-6 py-4">
+                                <div class="animate-pulse space-y-4">
+                                    <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                                    <div class="h-4 bg-gray-200 rounded"></div>
+                                    <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+        <!-- Modal content will be loaded here -->
+    </div>
+</div>
+{{ end }}

@@ -1,0 +1,29 @@
+{{ define "content" }}
+<div class="flex min-h-screen items-center justify-center">
+    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
+        <h2 class="text-3xl font-bold text-center text-gray-900">Sign in to Fundtract</h2>
+        <form hx-post="/api/auth/login" hx-target="#error-message" class="space-y-4">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" name="email" required 
+                    class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" name="password" required 
+                    class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div id="error-message" class="text-red-500 text-sm"></div>
+            <button type="submit" 
+                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Sign in
+            </button>
+        </form>
+        <div class="text-center">
+            <a href="/register" class="text-sm text-indigo-600 hover:text-indigo-500">
+                Don't have an account? Sign up
+            </a>
+        </div>
+    </div>
+</div>
+{{ end }}
