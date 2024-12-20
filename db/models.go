@@ -72,6 +72,7 @@ type UserDatum struct {
 	UserID    int64
 	Name      string
 	Username  string
+	Email     string
 	CreatedAt pgtype.Timestamptz
 	UpdatedAt pgtype.Timestamptz
 }

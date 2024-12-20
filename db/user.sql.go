@@ -108,25 +108,29 @@ func (q *Queries) InsertUserAuth(ctx context.Context, arg InsertUserAuthParams) 
 const insertUserData = `-- name: InsertUserData :one
 INSERT INTO user_data (
     name,
-    username
+    username,
+    email
 ) VALUES (
     $1,
-    $2
-) RETURNING user_id, name, username, created_at, updated_at
+    $2,
+    $3
+) RETURNING user_id, name, username, email, created_at, updated_at
 `
 
 type InsertUserDataParams struct {
 	Name     string
 	Username string
+	Email    string
 }
 
 func (q *Queries) InsertUserData(ctx context.Context, arg InsertUserDataParams) (UserDatum, error) {
-	row := q.db.QueryRow(ctx, insertUserData, arg.Name, arg.Username)
+	row := q.db.QueryRow(ctx, insertUserData, arg.Name, arg.Username, arg.Email)
 	var i UserDatum
 	err := row.Scan(
 		&i.UserID,
 		&i.Name,
 		&i.Username,
+		&i.Email,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
